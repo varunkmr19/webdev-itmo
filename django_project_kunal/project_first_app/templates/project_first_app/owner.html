@@ -12,6 +12,8 @@
   <ol>
     {% for p in possessions %}
     <li>{{ p.car.model }}</li>
+    {% empty %}
+    <p>You don't have any cars!</p>
     {% endfor %}
   </ol>
 </body>
