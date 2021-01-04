@@ -1,7 +1,7 @@
 from project_first_app.forms import CarForm
 from django.shortcuts import render
 from django.http import Http404
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse
 
 from . models import Car, Possession, CarOwner
@@ -46,6 +46,15 @@ class AddCar(CreateView):
     model = Car
     template_name = 'project_first_app/add_car.html'
     form_class = CarForm
+
+    def get_success_url(self):
+        return reverse('car_detail', args=(self.object.id,))
+
+
+class UpdateCar(UpdateView):
+    model = Car
+    template_name = 'project_first_app/add_car.html'
+    fields = ['marks', 'model', 'number_guest', 'color']
 
     def get_success_url(self):
         return reverse('car_detail', args=(self.object.id,))
