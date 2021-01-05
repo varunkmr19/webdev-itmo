@@ -37,7 +37,8 @@ def car_detail(request, car_id):
 class CarOwnerCreate(CreateView):
     model = CarOwner
     template_name = 'project_first_app/create.html'
-    fields = ['name', 'last_name', 'date_of_birth']
+    fields = ['first_name', 'last_name', 'date_of_birth',
+              'username', 'password', 'address', 'passport', 'nationality']
 
     def get_success_url(self):
         return reverse('detail', args=(self.object.id,))

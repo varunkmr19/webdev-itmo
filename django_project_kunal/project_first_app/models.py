@@ -2,17 +2,21 @@ from datetime import date
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 from django.utils.timezone import now
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
 
-class CarOwner(models.Model):
+class CarOwner(AbstractUser):
+    first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    name = models.CharField(max_length=30)
     date_of_birth = models.DateField(null=True, blank=True)
+    passport = models.CharField(max_length=10, blank=True, unique=True)
+    address = models.CharField(max_length=200, blank=True)
+    nationality = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
-        return f'{self.last_name} {self.name}'
+        return f'{self.last_name} {self.first_name}'
 
 
 class DriverIdentity(models.Model):
@@ -22,7 +26,7 @@ class DriverIdentity(models.Model):
     date_of_issue = models.DateField(default=now)
 
     def __str__(self):
-        return f'{self.last_name} {self.name}'
+        return f'{self.driver.last_name} {self.driver.first_name}'
 
 
 class Car(models.Model):
