@@ -7,6 +7,9 @@ class Employee(models.Model):
     middle_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class Resident(models.Model):
     first_name = models.CharField(max_length=50)
@@ -15,6 +18,9 @@ class Resident(models.Model):
     passport = models.CharField(max_length=10, unique=True)
     arrival_city = models.CharField(max_length=100)
     check_in = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.first_name} | {self.arrival_city} | {self.check_in}'
 
 
 class Room(models.Model):
@@ -31,6 +37,9 @@ class Room(models.Model):
     cleaners = models.ManyToManyField('Employee', through='CleaningSchedule')
     is_vacant = models.BooleanField(default=True)
 
+    def __str__(self):
+        return f'{self.number} | {self.type}'
+
 
 class BookingRecord(models.Model):
     resident = models.ForeignKey(Resident, on_delete=models.PROTECT, related_name='booking_details')
@@ -40,8 +49,14 @@ class BookingRecord(models.Model):
     total_bill = models.IntegerField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return f'{self.resident.last_name}'
+
 
 class CleaningSchedule(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='cleaner')
     staff = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='staff')
     date_time = models.DateTimeField()
+
+    def __str__(self):
+        return f'{self.staff.last_name} - {self.date_time}'
