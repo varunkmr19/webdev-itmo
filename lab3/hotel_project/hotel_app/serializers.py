@@ -16,7 +16,7 @@ class RoomSerializer(serializers.ModelSerializer):
 
 class ResidentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Room
+        model = Resident
         fields = '__all__'
 
 
